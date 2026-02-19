@@ -43,9 +43,14 @@ execute_process(
 set(FFMPEG_ZIP_PATH "${CMAKE_BINARY_DIR}/externals/ffmpeg-${FFMPEG_GIT_SHA}.zip")
 if(NOT EXISTS "${FFMPEG_ZIP_PATH}")
 	message(STATUS "Downloading FFMPEG prebuilts...")
-	file(DOWNLOAD https://github.com/shadps4-emu/ext-ffmpeg-core/releases/download/${FFMPEG_GIT_SHA}/${FFMPEG_PREBUILTS_NAME}
-			"${FFMPEG_ZIP_PATH}" SHOW_PROGRESS
-		STATUS FILE_STATUS)
+	file(DOWNLOAD 
+		https://github.com/shadps4-emu/ext-ffmpeg-core/releases/download/${FFMPEG_GIT_SHA}/${FFMPEG_PREBUILTS_NAME}
+		"${FFMPEG_ZIP_PATH}" 
+		SHOW_PROGRESS
+		TLS_VERIFY OFF  # 临时关闭 SSL 验证
+		STATUS FILE_STATUS
+		LOG download_log
+	)
 	list(GET FILE_STATUS 0 STATUS_CODE)
 	if (NOT STATUS_CODE EQUAL 0)
 		file(REMOVE "${FFMPEG_ZIP_PATH}") # CMake create 0 byte file even if URL is invalid. So need to delete it.
