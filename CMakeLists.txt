@@ -39,6 +39,9 @@ execute_process(
 	OUTPUT_VARIABLE FFMPEG_GIT_SHA
 	OUTPUT_STRIP_TRAILING_WHITESPACE)
 
+# 🔧 临时强制使用 94dde08（原始可用的版本）
+set(FFMPEG_GIT_SHA "94dde08")
+
 # Download prebuilt ffmpeg
 set(FFMPEG_ZIP_PATH "${CMAKE_BINARY_DIR}/externals/ffmpeg-${FFMPEG_GIT_SHA}.zip")
 if(NOT EXISTS "${FFMPEG_ZIP_PATH}")
